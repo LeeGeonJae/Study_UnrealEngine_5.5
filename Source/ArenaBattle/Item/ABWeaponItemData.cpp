@@ -3,3 +3,7 @@
 
 #include "ABWeaponItemData.h"
 
+UABWeaponItemData::UABWeaponItemData()
+{
+	Type = EItemType::Weapon;
+}
