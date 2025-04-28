@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Character/ABCharacterBase.h"
+#include "Engine/StreamableManager.h"
+#include "Interface/ABCharacterAIInterface.h"
 #include "ABCharacterNonePlayer.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class ARENABATTLE_API AABCharacterNonePlayer : public AABCharacterBase
+UCLASS(config = ArenaBattle)
+class ARENABATTLE_API AABCharacterNonePlayer : public AABCharacterBase, public IABCharacterAIInterface
 {
 	GENERATED_BODY()
 	
@@ -18,5 +20,27 @@ public:
 	AABCharacterNonePlayer();
 
 protected:
+	virtual void PostInitializeComponents() override;
+
+protected:
 	void SetDead() override;
+	void NPCMeshLoadCompleted();
+
+	UPROPERTY(config)
+	TArray<FSoftObjectPath> NPCMeshes;
+
+	TSharedPtr<FStreamableHandle> NPCMeshHandle;
+
+protected:
+	virtual float GetAIPatrolRadius() override;
+	virtual float GetAIDetectRange() override;
+	virtual float GetAIAttackRange() override;
+	virtual float GetAITurnSpeed() override;
+
+	virtual void SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished) override;
+	virtual void AttackByAI() override;
+
+	FAICharacterAttackFinished OnAttackFinished;
+
+	virtual void NotifyComboActionEnd() override;
 };

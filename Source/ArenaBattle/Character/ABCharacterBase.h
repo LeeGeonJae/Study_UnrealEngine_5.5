@@ -59,6 +59,7 @@ protected:
 
 	void ComboActionBegin();
 	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded);
+	virtual void NotifyComboActionEnd();
 	void SetComboCheckTimer();
 	void ComboCheck();
 
@@ -106,4 +107,9 @@ protected:
 	virtual void DrinkPotion(class UABItemData* InItemData);
 	virtual void EquipWeapon(class UABItemData* InItemData);
 	virtual void ReadScroll(class UABItemData* InItemData);
+
+// Stat Section
+public:
+	int32 GetLevel();
+	void SetLevel(int32 InNewLevel);
 };
